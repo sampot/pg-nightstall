@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+    <meta name="theme-color" content="#190b32" />
+    <meta
+      name="description"
+      content="夜市攤位爭霸：十二夜進貨、定價、宣傳，和對手搶客比淨資產。"
+    />
+    <title>夜市攤位爭霸</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="skyline" aria-hidden="true">
+      <span class="moon">☾</span>
+      <div class="buildings"></div>
+    </div>
+
+    <main>
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">今晚誰最旺？</p>
+          <h1>夜市攤位爭霸</h1>
+        </div>
+        <button id="sound-toggle" class="icon-button" type="button" aria-pressed="true">
+          ♪ 音樂開
+        </button>
+      </header>
+
+      <section id="lobby" class="lobby panel">
+        <div class="marquee" aria-hidden="true">
+          <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+        </div>
+        <p class="kicker">十二夜 · 三攤決勝</p>
+        <h2>選你的招牌攤位</h2>
+        <p class="intro">
+          看天氣進貨、自己定價，再用宣傳把人潮拉過來。最後按現金、庫存與人氣排排名。
+        </p>
+        <div id="product-picker" class="product-picker" role="radiogroup" aria-label="攤位類型">
+          <button type="button" class="product-card selected" data-product="snack" role="radio" aria-checked="true">
+            <img src="./assets/images/corn-dog.png" alt="" />
+            <strong>炙燒小吃</strong>
+            <span>客群穩定 · 成本 $4</span>
+          </button>
+          <button type="button" class="product-card" data-product="drink" role="radio" aria-checked="false">
+            <img src="./assets/images/soda.png" alt="" />
+            <strong>沁涼飲品</strong>
+            <span>熱浪爆發 · 成本 $3</span>
+          </button>
+          <button type="button" class="product-card" data-product="game" role="radio" aria-checked="false">
+            <img src="./assets/images/prize.png" alt="" />
+            <strong>套圈遊戲</strong>
+            <span>團客最愛 · 成本 $5</span>
+          </button>
+        </div>
+        <button id="start-button" class="primary big" type="button">掛燈開攤</button>
+        <p class="best-line">本機最佳淨資產 <strong id="lobby-best">$0</strong></p>
+      </section>
+
+      <section id="game" class="game" hidden>
+        <div class="hud" aria-label="遊戲狀態">
+          <div><span>夜數</span><strong id="night-value">1 / 12</strong></div>
+          <div><span>現金</span><strong id="cash-value">$80</strong></div>
+          <div><span>人氣</span><strong id="popularity-value">★★☆☆☆☆☆☆☆☆</strong></div>
+          <div><span>庫存</span><strong id="stock-value">0</strong></div>
+        </div>
+
+        <section id="forecast" class="forecast panel" aria-live="polite"></section>
+
+        <section class="market panel" aria-label="夜市場景">
+          <div class="lantern-wire" aria-hidden="true">
+            <b></b><b></b><b></b><b></b><b></b><b></b><b></b>
+          </div>
+          <div class="market-sign">福氣夜市</div>
+          <div id="crowd" class="crowd" aria-hidden="true"></div>
+          <div id="stall-row" class="stall-row"></div>
+          <div class="street" aria-hidden="true"><i></i><i></i><i></i></div>
+        </section>
+
+        <section class="planner panel">
+          <div class="planner-heading">
+            <div>
+              <p class="kicker">開市前準備</p>
+              <h2>今晚怎麼賣？</h2>
+            </div>
+            <strong id="budget-left" class="budget">$80 可用</strong>
+          </div>
+
+          <div class="control-block">
+            <label for="quantity">進貨量 <output id="quantity-output">8 份</output></label>
+            <input id="quantity" type="range" min="0" max="20" value="8" step="1" />
+          </div>
+          <div class="control-block">
+            <label for="price">單價 <output id="price-output">$10</output></label>
+            <input id="price" type="range" min="5" max="18" value="10" step="1" />
+          </div>
+          <fieldset class="promo-control">
+            <legend>宣傳力道</legend>
+            <div id="promotion-picker" class="segments">
+              <button type="button" class="selected" data-promotion="0">不宣傳<br /><small>$0</small></button>
+              <button type="button" data-promotion="1">發傳單<br /><small>$5</small></button>
+              <button type="button" data-promotion="2">舞台喊麥<br /><small>$10</small></button>
+            </div>
+          </fieldset>
+          <label class="cover-toggle">
+            <input id="rain-cover" type="checkbox" />
+            <span><strong>加架雨棚</strong><small>花 $4；下雨時保住庫存</small></span>
+          </label>
+          <div class="cost-row">
+            <span>今晚投入</span>
+            <strong id="cost-value">$32</strong>
+          </div>
+          <p id="plan-message" class="plan-message" role="status"></p>
+          <button id="open-button" class="primary big" type="button">點燈開市！</button>
+        </section>
+      </section>
+
+      <section id="result-sheet" class="sheet" hidden aria-modal="true" role="dialog" aria-labelledby="result-title">
+        <div class="sheet-card">
+          <div id="result-burst" class="result-burst" aria-hidden="true">✦</div>
+          <p id="result-kicker" class="kicker"></p>
+          <h2 id="result-title"></h2>
+          <div id="result-content"></div>
+          <button id="continue-button" class="primary big" type="button"></button>
+        </div>
+      </section>
+
+      <footer>
+        <button id="how-button" type="button" class="text-button">玩法與素材</button>
+        <span>Playgrounds · Sampot</span>
+      </footer>
+    </main>
+
+    <section id="about-sheet" class="sheet" hidden aria-modal="true" role="dialog" aria-labelledby="about-title">
+      <div class="sheet-card about-card">
+        <h2 id="about-title">玩法與素材</h2>
+        <ol>
+          <li>每夜先看預報，再決定進貨、售價、宣傳與雨棚。</li>
+          <li>價格親民、宣傳夠力、攤種對上事件，都會吸引更多客人。</li>
+          <li>十二夜後以現金＋半價庫存＋人氣獎勵計算淨資產。</li>
+        </ol>
+        <p>美術、音效、音樂與字型署名詳見 <a href="./ATTRIBUTION.md">ATTRIBUTION.md</a>。</p>
+        <button id="about-close" class="primary" type="button">知道了</button>
+      </div>
+    </section>
+
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>
