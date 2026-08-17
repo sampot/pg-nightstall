@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "rev": "ad936a5",
+  "files": [
+    "app.js",
+    "assets/audio/cash.ogg",
+    "assets/audio/click.ogg",
+    "assets/audio/night-market-loop.ogg",
+    "assets/audio/pop.ogg",
+    "assets/fonts/cubic-11.woff2",
+    "assets/images/corn-dog.png",
+    "assets/images/prize.png",
+    "assets/images/soda.png",
+    "assets/licenses/blippy-bits.txt",
+    "assets/licenses/cubic-11-ofl.txt",
+    "assets/licenses/kenney-food-kit.txt",
+    "assets/licenses/kenney-ui-audio.txt",
+    "audio.js",
+    "functions.js",
+    "game.js",
+    "index.html",
+    "persist.js",
+    "styles.css"
+  ]
+}
